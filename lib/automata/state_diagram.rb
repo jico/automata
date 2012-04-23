@@ -10,21 +10,13 @@ module Automata
     attr_accessor :states, :alphabet, :start, :accept, :transitions
     
     def initialize(params={})
-      @states = params[:states]
-      @alphabet = params[:alphabet]
-      @start = params[:start]
-      @accept = params[:accept]
-      @transitions = params[:transitions]
-    end
-    
-    def init_from_file(filename)
-      yaml = YAML::load_file(filename)
-      @states = yaml['states']
-      @alphabet = yaml['alphabet']
-      @start = yaml['start']
-      @accept = yaml['accept']
-      @transitions = yaml['transitions']
-      yaml
+      yaml = {}
+      yaml = YAML::load_file(params[:file]) if params.has_key? :file
+      @states = yaml['states'] || params[:states]
+      @alphabet = yaml['alphabet'] || params[:alphabet]
+      @start = yaml['start'] || params[:start]
+      @accept = yaml['accept'] || params[:accept]
+      @transitions = yaml['transitions'] || params[:transitions]
     end
     
   end
