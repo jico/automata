@@ -1,0 +1,20 @@
+states:
+  - q1
+  - q2
+  - q3
+alphabet:
+  - '0'
+  - '1'
+start: q1
+accept:
+  - q3
+transitions:
+  q1:
+    '0': q2
+    '1': q2
+  q2:
+    '0': q1
+    '1': q3
+  q3:
+    '0': q3
+    '1': q3
