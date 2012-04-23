@@ -2,7 +2,11 @@
 
 A sweet Ruby gem for creating and simulating deterministic/nondeterministic finite automata, push-down automata, and Turing machines.
 
+__Note:__ This gem is still under development. Not all automata have been fully implemented yet.
+
 ## Installation
+
+Requires __Ruby 1.9.3__.
 
 Add this line to your application's Gemfile:
 
@@ -18,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+We'll be adding some wiki pages with usage details soon.
 
 ## Contributing
 
