@@ -17,7 +17,7 @@ module Automata
     # * *Returns*:
     #   Whether or not the DFA is valid (boolean).
     #
-    def is_valid?
+    def valid?
       @transitions.each do |key, val|
         @alphabet.each { |a| return false unless @transitions[key].has_key? a }
       end
