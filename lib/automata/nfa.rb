@@ -20,37 +20,73 @@ module Automata
     # Determines whether the NFA accepts the given string.
     #
     # * *Args*:
-    #   - +string* -> The string to use as input for the DFA.
-    #
+    #   - +string+ -> The string to use as input for the DFA.
     # * *Returns*:
     #   Whether or not the DFA accepts the string (boolean).
     #
     def accepts?(string)
       heads = [@start]
       string.each_char do |symbol|
-        heads.each_with_index do |i, head|
+        newHeads = []
+        heads.each_with_index do |head, i|
           #--
           # Check if head can transition read symbol
-          if @transitions[head].has_key? symbol
-            heads[i] = @transitions[head][symbol]
-          else
-            #--
-            # Head dies if no transition for symbol
-            heads.delete_at i
-          end
-          #--
-          # Check for empty-transition
-          if @transitions[head].has_key? '&'
-            heads << @transitions[head]['&']
+          # Head dies if no transition for symbol
+          if has_transition?(head, symbol)
+            transition(head, symbol).each { |t| newHeads << t }
           end
         end
-        
+        heads = newHeads
         break if heads.empty?
       end
-      is_accept_state? head
+      
+      heads.each { |head| return true if accept_state? head }
+      false
     end
     
-    def is_accept_state?(state)
+    ##
+    # Determine the states to transition to from a given
+    # state and input symbol.
+    #
+    # * *Args*:
+    #   - +state+ -> State transitioning from.
+    #   - +input+ -> Input symbol.
+    # * *Returns*:
+    #   The array of transition states. Nil if none.
+    #
+    def transition(state, input)
+      if has_transition?(state, input)
+        dests = @transitions[state][input]
+        dests = [dests] unless dests.kind_of? Array
+        dests
+      else
+        nil
+      end
+    end
+    
+    ##
+    # Determine whether or not a transition exists
+    # for a state, given an input symbol.
+    #
+    # * *Args*:
+    #   - +state+ -> State transitioning from.
+    #   - +input+ -> Input symbol.
+    # * *Returns*:
+    #   Whether a transition exists. (boolean)
+    #
+    def has_transition?(state, input)
+      @transitions[state].has_key? input
+    end
+    
+    ##
+    # Determine if a given state is an accept state.
+    #
+    # * *Args*:
+    #   - +state+ -> The state.
+    # * *Returns*:
+    #   Whether or not the state is an accept state. (boolean)
+    #
+    def accept_state?(state)
       @accept.include? state
     end
   end
