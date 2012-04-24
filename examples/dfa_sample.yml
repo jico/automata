@@ -1,20 +1,29 @@
+##
+# Sample DFA file.
+#
+# Accepts all binary strings starting with 00.
+#
 states:
-  - q1
-  - q2
-  - q3
+  - A
+  - B
+  - C
+  - D
 alphabet:
   - '0'
   - '1'
-start: q1
+start: A
 accept:
-  - q3
+  - C
 transitions:
-  q1:
-    '0': q2
-    '1': q2
-  q2:
-    '0': q1
-    '1': q3
-  q3:
-    '0': q3
-    '1': q3
+  A:
+    '0': B
+    '1': D
+  B:
+    '0': C
+    '1': D
+  C:
+    '0': C
+    '1': C
+  D:
+    '0': D
+    '1': D

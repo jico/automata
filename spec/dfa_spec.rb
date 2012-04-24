@@ -11,8 +11,8 @@ describe Automata::DFA do
       @dfa.should be_valid
     end
     
-    it "should accept '01'" do
-      @dfa.accepts?('01').should == true
+    it "should accept '00'" do
+      @dfa.accepts?('00').should == true
     end
     
     it "should accept '001101'" do
@@ -23,8 +23,20 @@ describe Automata::DFA do
       @dfa.accepts?('').should == false
     end
     
-    it "should not accept '10'" do
-      @dfa.accepts?('10').should == false
+    it "should not accept '0'" do
+      @dfa.accepts?('0').should == false
+    end
+    
+    it "should not accept '1'" do
+      @dfa.accepts?('1').should == false
+    end
+    
+    it "should not accept '01'" do
+      @dfa.accepts?('01').should == false
+    end
+    
+    it "should not accept '100'" do
+      @dfa.accepts?('100').should == false
     end
   end
   
@@ -40,22 +52,26 @@ describe Automata::DFA do
   
   context "Initializing a DFA by params" do
     before do
-      states = ['q1','q2','q3']
-      alphabet = ['0','1']
-      start = 'q1'
-      accept = ['q3']
+      states = %w( A B C D )
+      alphabet = %w( 0 1 )
+      start = 'A'
+      accept = %w( C )
       transitions = {
-        'q1' => {
-          '0' => 'q2',
-          '1' => 'q2'
+        'A' => {
+          '0' => 'B',
+          '1' => 'D'
         },
-        'q2' => {
-          '0' => 'q1',
-          '1' => 'q3'
+        'B' => {
+          '0' => 'C',
+          '1' => 'D'
         },
-        'q3' => {
-          '0' => 'q3',
-          '1' => 'q3'
+        'C' => {
+          '0' => 'C',
+          '1' => 'C'
+        },
+        'D' => {
+          '0' => 'D',
+          '1' => 'D'
         }
       }
       params = {
@@ -72,8 +88,8 @@ describe Automata::DFA do
       @dfa.should be_valid
     end
     
-    it "should accept '01'" do
-      @dfa.accepts?('01').should == true
+    it "should accept '00'" do
+      @dfa.accepts?('00').should == true
     end
     
     it "should accept '001101'" do
@@ -84,8 +100,20 @@ describe Automata::DFA do
       @dfa.accepts?('').should == false
     end
     
-    it "should not accept '10'" do
-      @dfa.accepts?('10').should == false
+    it "should not accept '0'" do
+      @dfa.accepts?('0').should == false
+    end
+    
+    it "should not accept '1'" do
+      @dfa.accepts?('1').should == false
+    end
+    
+    it "should not accept '01'" do
+      @dfa.accepts?('01').should == false
+    end
+    
+    it "should not accept '100'" do
+      @dfa.accepts?('100').should == false
     end
   end
 end
