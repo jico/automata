@@ -28,7 +28,7 @@ module Automata
     # Determines whether the DFA accepts the given string.
     #
     # * *Args*:
-    #   - +string* -> The string to use as input for the DFA.
+    #   - +string+ -> The string to use as input for the DFA.
     #
     # * *Returns*:
     #   Whether or not the DFA accepts the string (boolean).
