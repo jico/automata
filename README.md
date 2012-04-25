@@ -88,6 +88,10 @@ Now that we've built a machine, we can pass it input and let it work its magic. 
     
 Awesomesauce.
 
+## Special Characters
+
+* _&_ - Represents an ε-transition (epsilon/empty transition)
+
 ## Contributing
 
 1. Fork it
