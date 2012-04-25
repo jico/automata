@@ -1,49 +1,39 @@
 module Automata
-  
-  ##
   # Deterministic Finite Automata.
-  # 
-  # Each state of a DFA must have exactly one transition for each transition
-  # defined at creation.
-  #
-  #--
-  # TODO: Check that each state is connected.
-  #
   class DFA < StateDiagram
-    
-    ##
-    # Verify that the initialized DFA is valid.
+    # Verifies that the initialized DFA is valid.
+    # Checks that each state has a transition for each
+    # symbol in the alphabet.
     #
-    # * *Returns*:
-    #   Whether or not the DFA is valid (boolean).
-    #
+    # @return [Boolean] whether or not the DFA is valid.
     def valid?
+      # @todo Check that each state is connected.
+      #   Iterate through each states to verify the graph
+      #   is not disjoint.
       @transitions.each do |key, val|
         @alphabet.each { |a| return false unless @transitions[key].has_key? a }
       end
       true
     end
     
-    ##
-    # Determines whether the DFA accepts the given string.
+    # Determines whether the DFA accepts a given string.
     #
-    # * *Args*:
-    #   - +string+ -> The string to use as input for the DFA.
-    #
-    # * *Returns*:
-    #   Whether or not the DFA accepts the string (boolean).
-    #
-    def accepts?(string)
+    # @param [String] input the string to use as input for the DFA.
+    # @return [Boolean] whether or not the DFA accepts the string.
+    def accepts?(input)
       head = @start
-      string.each_char do |symbol|
+      input.each_char do |symbol|
         head = @transitions[head][symbol]
       end
       is_accept_state? head
     end
     
+    # Determines if a given state is an accept state.
+    #
+    # @param [String] state the state label to check.
+    # @return [Boolean] whether or not the state is an accept state.
     def is_accept_state?(state)
       @accept.include? state
     end
   end
-  
 end
