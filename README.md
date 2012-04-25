@@ -25,6 +25,7 @@ Or install it yourself as:
 ### Creating a new machine
 
 Defining a new machine can be done in two ways: 
+
 * From a structured YAML file.
 * Through class setter methods.
 
@@ -90,7 +91,7 @@ Awesomesauce.
 
 ## Special Characters
 
-* _&_ - Represents an ε-transition (epsilon/empty transition)
+* _&_ - Represents an ε-transition (epsilon transition)
 
 ## Contributing
 
