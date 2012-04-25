@@ -25,7 +25,7 @@ transitions:
       - A
       - C
   C:
-    '0': C
+    '0':
+      - C
+      - D
     '1': C
-  D:
-    
