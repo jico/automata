@@ -1,0 +1,31 @@
+##
+# Sample NFA build file
+#
+# Accepts all binary strings where
+# the last symbol is 0 or
+# which contain only 1's
+#
+states:
+  - A
+  - B
+  - C
+  - D
+alphabet:
+  - '0'
+  - '1'
+start: B
+accept:
+  - A
+  - D
+transitions:
+  A:
+    '1': A
+  B:
+    '&':
+      - A
+      - C
+  C:
+    '0': C
+    '1': C
+  D:
+    
