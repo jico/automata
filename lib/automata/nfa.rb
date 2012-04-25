@@ -22,18 +22,16 @@ module Automata
     #
     def accepts?(string)
       heads = [@start]
+      
+      #--
+      # Move any initial e-transitions
+      if has_transition?(@start, '&')
+        transition(@start, '&').each { |h| heads << h } 
+      end
+      
       string.each_char do |symbol|
         newHeads, eTrans = [], []
-        
-        #--
-        # Move any e-transitions
-        heads.each do |head|
-          if has_transition?(head, '&')
-            transition(head, '&').each { |t| eTrans << t }
-          end
-        end
-        eTrans.each { |h| heads << h }
-        
+                
         heads.each do |head|
           #--
           # Check if head can transition read symbol
@@ -42,6 +40,16 @@ module Automata
             transition(head, symbol).each { |t| newHeads << t }
           end
         end
+        
+        #--
+        # Move any e-transitions
+        newHeads.each do |head|
+          if has_transition?(head, '&')
+            transition(head, '&').each { |t| eTrans << t }
+          end
+        end
+        eTrans.each { |t| newHeads << t }
+        
         heads = newHeads
         break if heads.empty?
       end
