@@ -80,7 +80,7 @@ We can define each property of the DFA in a similar manner.
 Now that we've built a machine, we can pass it input and let it work its magic. Consider our DFA built using our `examples/dfa_sample.yml` file, which accepts all strings starting with _00_. Let's experiment with some input:
 
     # We can make sure it's a valid DFA
-    >> dfa.is_valid?
+    >> dfa.valid?
     => true
     >> dfa.accepts? '001'
     => true
