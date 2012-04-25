@@ -75,6 +75,7 @@ module Automata
     #   Whether a transition exists. (boolean)
     #
     def has_transition?(state, input)
+      return false unless @transitions.include? state
       @transitions[state].has_key? input
     end
     
