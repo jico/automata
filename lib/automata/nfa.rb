@@ -12,10 +12,6 @@ module Automata
   #
   class NFA < StateDiagram
     
-    #--
-    # TODO: Check if valid NFA.
-    #
-    
     ##
     # Determines whether the NFA accepts the given string.
     #
@@ -27,8 +23,18 @@ module Automata
     def accepts?(string)
       heads = [@start]
       string.each_char do |symbol|
-        newHeads = []
-        heads.each_with_index do |head, i|
+        newHeads, eTrans = [], []
+        
+        #--
+        # Move any e-transitions
+        heads.each do |head|
+          if has_transition?(head, '&')
+            transition(head, '&').each { |t| eTrans << t }
+          end
+        end
+        eTrans.each { |h| heads << h }
+        
+        heads.each do |head|
           #--
           # Check if head can transition read symbol
           # Head dies if no transition for symbol
