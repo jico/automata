@@ -1,39 +1,27 @@
 module Automata
-  
-  ##
-  # Deterministic Finite Automata.
-  # 
-  # NFA nodes do not need to have a transition for each
-  # symbol in the alphabet. Empty transitions, denoted by 
-  # the '&' charactar, force a transition to another node.
-  #
-  #--
-  # TODO: Check that each state is connected.
-  #
+  # Nondeterministic Finite Automata.
   class NFA < StateDiagram
+    # @todo Check that each state is connected.
+    #   Iterate through each states to verify the graph
+    #   is not disjoint.
     
-    ##
-    # Determines whether the NFA accepts the given string.
+    # Determines whether the NFA accepts a given string.
     #
-    # * *Args*:
-    #   - +string+ -> The string to use as input for the DFA.
-    # * *Returns*:
-    #   Whether or not the DFA accepts the string (boolean).
-    #
-    def accepts?(string)
+    # @param [String] input the string to use as input for the NFA.
+    # @return [Boolean] Whether or not the NFA accepts the input string.
+    def accepts?(input)
       heads = [@start]
       
-      #--
       # Move any initial e-transitions
       if has_transition?(@start, '&')
         transition(@start, '&').each { |h| heads << h } 
       end
       
-      string.each_char do |symbol|
+      # Iterate through each symbol of input string
+      input.each_char do |symbol|
         newHeads, eTrans = [], []
                 
         heads.each do |head|
-          #--
           # Check if head can transition read symbol
           # Head dies if no transition for symbol
           if has_transition?(head, symbol)
@@ -41,7 +29,6 @@ module Automata
           end
         end
         
-        #--
         # Move any e-transitions
         newHeads.each do |head|
           if has_transition?(head, '&')
@@ -58,52 +45,37 @@ module Automata
       false
     end
     
-    ##
-    # Determine the states to transition to from a given
-    # state and input symbol.
+    # Determines the transition states, if any, from a given 
+    # beginning state and input symbol pair.
     #
-    # * *Args*:
-    #   - +state+ -> State transitioning from.
-    #   - +input+ -> Input symbol.
-    # * *Returns*:
-    #   The array of transition states. Nil if none.
-    #
-    def transition(state, input)
-      if has_transition?(state, input)
-        dests = @transitions[state][input]
-        dests = [dests] unless dests.kind_of? Array
-        dests
-      else
-        nil
-      end
+    # @note NFA ε-transitions
+    #   ε-transitions are supported through the use of the
+    #   reserved input alphabet character '&'.
+    # @param [String] state state label for beginning state.
+    # @param [String] symbol input symbol.
+    # @return [Array] Array of destination transition states.
+    def transition(state, symbol)
+      dests = @transitions[state][symbol]
+      dests = [dests] unless dests.kind_of? Array
+      dests
     end
     
-    ##
-    # Determine whether or not a transition exists
-    # for a state, given an input symbol.
+    # Determines whether or not any transition states exist
+    # given a beginning state and input symbol pair.
     #
-    # * *Args*:
-    #   - +state+ -> State transitioning from.
-    #   - +input+ -> Input symbol.
-    # * *Returns*:
-    #   Whether a transition exists. (boolean)
-    #
-    def has_transition?(state, input)
+    # @param (see #transition)
+    # @return [Boolean] Whether or not a transition exists.
+    def has_transition?(state, symbol)
       return false unless @transitions.include? state
-      @transitions[state].has_key? input
+      @transitions[state].has_key? symbol
     end
     
-    ##
-    # Determine if a given state is an accept state.
+    # Determines if a given state is an accept state.
     #
-    # * *Args*:
-    #   - +state+ -> The state.
-    # * *Returns*:
-    #   Whether or not the state is an accept state. (boolean)
-    #
+    # @param [String] state the state label to check.
+    # @return [Boolean] whether or not the state is an accept state.
     def accept_state?(state)
       @accept.include? state
     end
   end
-  
 end
