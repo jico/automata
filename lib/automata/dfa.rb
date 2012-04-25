@@ -22,9 +22,7 @@ module Automata
     # @return [Boolean] whether or not the DFA accepts the string.
     def accepts?(input)
       head = @start
-      input.each_char do |symbol|
-        head = @transitions[head][symbol]
-      end
+      input.each_char { |symbol| head = @transitions[head][symbol] }
       is_accept_state? head
     end
     
