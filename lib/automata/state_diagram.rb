@@ -28,6 +28,7 @@ module Automata
       @start = yaml['start'] || params[:start]
       @accept = yaml['accept'] || params[:accept]
       @transitions = yaml['transitions'] || params[:transitions]
+      @transitions = Hash.keys_to_strings(@transitions)
     end
   end
 end

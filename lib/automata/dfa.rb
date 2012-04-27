@@ -11,9 +11,11 @@ module Automata
       #   Iterate through each states to verify the graph
       #   is not disjoint.
       @transitions.each do |key, val|
-        @alphabet.each { |a| return false unless @transitions[key].has_key? a }
+        @alphabet.each do |a| 
+          return false unless @transitions[key].has_key? a.to_s
+        end
       end
-      true
+      return true
     end
     
     # Determines whether the DFA accepts a given string.
@@ -21,7 +23,7 @@ module Automata
     # @param [String] input the string to use as input for the DFA.
     # @return [Boolean] whether or not the DFA accepts the string.
     def accepts?(input)
-      head = @start
+      head = @start.to_s
       input.each_char { |symbol| head = @transitions[head][symbol] }
       is_accept_state? head
     end
@@ -31,7 +33,7 @@ module Automata
     # @param [String] state the state label to check.
     # @return [Boolean] whether or not the state is an accept state.
     def is_accept_state?(state)
-      @accept.include? state
+      @accept.include? state.to_s
     end
   end
 end
