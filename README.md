@@ -39,26 +39,24 @@ We can easily define a machine's _n_-tuples in a YAML file. For example, let's c
       - C
       - D
     alphabet:
-      - '0'
-      - '1'
+      - 0
+      - 1
     start: A
     accept:
       - C
     transitions:
       A:
-        '0': B
-        '1': D
+        0: B
+        1: D
       B:
-        '0': C
-        '1': D
+        0: C
+        1: D
       C:
-        '0': C
-        '1': C
+        0: C
+        1: C
       D:
-        '0': D
-        '1': D
-        
-__Note:__ Integer hash keys are currently unsupported, hence they must be wrapped in quotes.
+        0: D
+        1: D
 
 With our machine defined, we can create a new DFA object from the file.
 
@@ -87,11 +85,11 @@ Now that we've built a machine, we can pass it input and let it work its magic. 
     >> dfa.accepts? '0101'
     => false
     
-Awesomesauce.
+Awesomesauce. Please refer to the [wiki](https://github.com/jico/automata/wiki "automata wiki") for more details.
 
 ## Special Characters
 
-* _&_ - Represents an ε-transition (epsilon transition)
+* _&_ - Represents an ε-transition (epsilon transition). Note that you must wrap the symbol in quotes.
 
 ## Contributing
 
