@@ -9,21 +9,21 @@ states:
   - C
   - D
 alphabet:
-  - '0'
-  - '1'
+  - 0
+  - 1
 start: A
 accept:
   - C
 transitions:
   A:
-    '0': B
-    '1': D
+    0: B
+    1: D
   B:
-    '0': C
-    '1': D
+    0: C
+    1: D
   C:
-    '0': C
-    '1': C
+    0: C
+    1: C
   D:
-    '0': D
-    '1': D
+    0: D
+    1: D

@@ -11,21 +11,21 @@ states:
   - C
   - D
 alphabet:
-  - '0'
-  - '1'
+  - 0
+  - 1
 start: B
 accept:
   - A
   - D
 transitions:
   A:
-    '1': A
+    1: A
   B:
     '&':
       - A
       - C
   C:
-    '0':
+    0:
       - C
       - D
-    '1': C
+    1: C
