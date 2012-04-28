@@ -3,6 +3,7 @@ require 'yaml'
 require "automata/state_diagram"
 require "automata/dfa"
 require "automata/nfa"
+require "automata/pda"
 
 module Automata
 

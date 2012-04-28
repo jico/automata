@@ -1,0 +1,21 @@
+## # Sample PDA file.
+#
+# Accepts balanced brackets only.
+#
+states:
+  - A
+  - B
+alphabet:
+  - (
+  - )
+  - delta
+start: A
+accept:
+  - B
+transitions:
+  A:
+    (: [A, push (]
+    ): [A, pop]
+	delta: [B, pop delta]
+  B:
+  # TODO  we may need to specify that there are no transitions here later

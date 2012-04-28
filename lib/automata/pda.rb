@@ -9,6 +9,7 @@ module Automata
     # @return [Boolean] whether or not hte PDA accepts the string.
     def accepts?(input)
       # TODO
+      return true
     end
   end
 end
