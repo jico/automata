@@ -2,7 +2,7 @@
 require File.expand_path('../lib/automata/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Jico Baligod"]
+  gem.authors       = ["Jico Baligod", "Lukas Sabota"]
   gem.email         = ["jico@baligod.com"]
   gem.description   = %q{Create and simulate automaton.}
   gem.summary       = %q{This gem provides a number of classes to create and simulate Deterministic/Nondeterministic Finite Automata, Push-down Automata, and Turing Machines.}
