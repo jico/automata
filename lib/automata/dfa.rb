@@ -26,7 +26,7 @@ module Automata
     #   * :input [String] the original input string
     #   * :accept [Boolean] whether or not the DFA accepted the string
     #   * :head [String] the state which the head is currently on
-    def run(input)
+    def feed(input)
       head = @start.to_s
       input.each_char { |symbol| head = @transitions[head][symbol] }
       accept = is_accept_state? head
