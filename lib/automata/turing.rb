@@ -48,7 +48,8 @@ module Automata
         accept: @accept,
         reject: @reject,
         head: stateHead,
-        tape: @tape.memory
+        tape: @tape.memory,
+        output: @tape.output
       }
       resp
     end
@@ -143,6 +144,13 @@ module Automata
       else
         return false
       end
+    end
+
+    # Trims the memory empty cells and outputs the tape string.
+    #
+    # @return [String] the tape memory string
+    def output
+      @memory.join.sub(/^@*/, '')
     end
 
   end
