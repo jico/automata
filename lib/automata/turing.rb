@@ -1,13 +1,17 @@
 module Automata
   # Turing Machine
-  class TM < StateDiagram
+  class Turing < StateDiagram
+    attr_accessor :inputAlphabet, :tapeAlphabet
+
     # @todo Check that each state is connected.
     #   Iterate through each states to verify the graph
     #   is not disjoint.
 
     def initialize(params={})
+      yaml = {}
+      yaml = YAML::load_file(params[:file]) if params.has_key? :file
       super(params)
-      @inputAlphabet = yaml[:input_alphabet]
+      @inputAlphabet = yaml['input_alphabet']
     end
     
     # Runs the input on the machine and returns a Hash describing

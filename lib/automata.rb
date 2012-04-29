@@ -4,7 +4,7 @@ require "automata/state_diagram"
 require "automata/dfa"
 require "automata/nfa"
 require "automata/pda"
-require "automata/tm"
+require "automata/turing"
 
 module Automata
 
