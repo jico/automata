@@ -150,7 +150,7 @@ module Automata
     #
     # @return [String] the tape memory string
     def output
-      @memory.join.sub(/^@*/, '')
+      @memory.join.chomp('@').sub(/^@*/, '')
     end
 
   end
