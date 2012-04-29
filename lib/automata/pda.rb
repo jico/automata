@@ -1,6 +1,6 @@
 module Automata
   # Push Down Automata
-  class PDA < DFA
+  class PDA < NFA
     # Determines whether the PDA accepts a given string.
     #
     # This method is intended to override the parent accepts method.
