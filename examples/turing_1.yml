@@ -21,35 +21,29 @@ tapeAlphabet:
 start: A
 transitions:
   A:
-    - 
+    0:
       to: A
-      read: 0
       write: 0
       move: R
-    -
+    1:
       to: B
-      read: 1
       write: 1
       move: R
   B:
-    -
+    1:
       to: B
-      read: 1
       write: 1
       move: R
-    -
+    0:
       to: C
-      read: 0
       write: 0
       move: R
   C:
-    -
+    1:
       to: ACCEPT
-      read: 1
       write: 1
       move: R
-    -
+    0:
       to: A
-      read: 0
       write: 0
       move: R
