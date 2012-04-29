@@ -5,11 +5,15 @@ module Automata
     #   Iterate through each states to verify the graph
     #   is not disjoint.
     
-    # Determines whether the NFA accepts a given string.
+    # Runs the input on the machine and returns a Hash describing
+    # the machine's final state after running.
     #
-    # @param [String] input the string to use as input for the NFA.
-    # @return [Boolean] Whether or not the NFA accepts the input string.
-    def accepts?(input)
+    # @param [String] input the string to use as input for the NFA
+    # @return [Hash] a hash describing the NFA state after running
+    #   * :input [String] the original input string
+    #   * :accept [Boolean] whether or not the NFA accepted the string
+    #   * :heads [Array] the state which the head is currently on
+    def feed(input)
       heads = [@start]
       
       # Move any initial e-transitions
@@ -41,8 +45,23 @@ module Automata
         break if heads.empty?
       end
       
-      heads.each { |head| return true if accept_state? head }
-      false
+      accept = false
+      heads.each { |head| accept = true if accept_state? head }
+
+      resp = {
+        input: input,
+        accept: accept,
+        heads: heads
+      }
+    end
+
+    # Determines whether the NFA accepts a given string.
+    #
+    # @param [String] input the string to use as input for the NFA.
+    # @return [Boolean] Whether or not the NFA accepts the input string.
+    def accepts?(input)
+      resp = feed(input)
+      resp[:accept]
     end
     
     # Determines the transition states, if any, from a given 
