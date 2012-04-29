@@ -12,10 +12,10 @@ states:
   - A
   - B
   - C
-input_alphabet:
+inputAlphabet:
   - 0
   - 1
-tape_alphabet:
+tapeAlphabet:
   - 0
   - 1
 start: A

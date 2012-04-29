@@ -11,7 +11,7 @@ module Automata
       yaml = {}
       yaml = YAML::load_file(params[:file]) if params.has_key? :file
       super(params)
-      @inputAlphabet = yaml['input_alphabet']
+      @inputAlphabet = params[:inputAlphabet] || yaml['inputAlphabet']
     end
     
     # Runs the input on the machine and returns a Hash describing
