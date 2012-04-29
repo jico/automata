@@ -43,9 +43,8 @@ module Automata
     # @param [String] input the string to use as input for the DFA.
     # @return [Boolean] whether or not the DFA accepts the string.
     def accepts?(input)
-      head = @start.to_s
-      input.each_char { |symbol| head = @transitions[head][symbol] }
-      is_accept_state? head
+      resp = feed(input)
+      resp[:accept]
     end
     
     # Determines if a given state is an accept state.
