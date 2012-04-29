@@ -1,0 +1,55 @@
+##
+# Sample TM build file
+#
+# Accepts all binary strings containing
+# the substring 101.
+#
+# Notes:
+# '@' denotes the blank for the tape alphabet
+# 'ACCEPT' denotes unique accept state (include in transition)
+# 'REJECT' denotes unique reject state (include in transition)
+states:
+  - A
+  - B
+  - C
+input_alphabet:
+  - 0
+  - 1
+tape_alphabet:
+  - 0
+  - 1
+start: A
+transitions:
+  A:
+    - 
+      to: A
+      read: 0
+      write: 0
+      move: R
+    -
+      to: B
+      read: 1
+      write: 1
+      move: R
+  B:
+    -
+      to: B
+      read: 1
+      write: 1
+      move: R
+    -
+      to: C
+      read: 0
+      write: 0
+      move: R
+  C:
+    -
+      to: ACCEPT
+      read: 1
+      write: 1
+      move: R
+    -
+      to: A
+      read: 0
+      write: 0
+      move: R
