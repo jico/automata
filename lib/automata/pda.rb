@@ -3,12 +3,10 @@ module Automata
   class PDA < NFA
     attr_accessor :stack
 
-    # Initialize a PDA object.  See state_diagram.rb for paramters.
-    #
-    # TODO: do i need to define params here they are the same?
-    # 
+    # Initialize a PDA object.
     def initialize(params={})
       super(params)
+      @alphabet << '&' unless @alphabet.include? '&'
       @stack = []
     end
 
@@ -21,25 +19,52 @@ module Automata
     #   * :accept [Boolean] whether or not the PDA accepted the string
     #   * :heads [Array] the state which the head is currently on
     def feed(input)
-      head = @start
+      heads, @stack, accept = [@start], [], false
+      
+      # Move any initial e-transitions
+      eTrans = transition(@start, '&') if has_transition?(@start, '&')
+      heads += eTrans
+
+      puts "initial heads: #{heads}"
+      puts "initial stack: #{stack}"
 
       # Iterate through each symbol of input string
       input.each_char do |symbol|
-        if has_transition?(head, symbol)
-          transition(head, symbol)
+        newHeads = []
+        
+        puts "Reading symbol: #{symbol}"
+
+        heads.each do |head|
+          puts "At head #{head}"
+
+          # Check if head can transition read symbol
+          # Head dies if no transition for symbol
+          if has_transition?(head, symbol)
+            puts "Head #{head} transitions #{symbol}"
+            puts "stack: #{stack}"
+            transition(head, symbol).each { |t| newHeads << t }
+            puts "heads: #{newHeads}"
+          end
+
         end
-	  end
-    
-      accept = false
-      if accept_state? head
-        accept = true
+        
+        heads = newHeads
+        break if heads.empty? || includes_accept_state?(heads)
       end
+
+      puts "Loop finished"
+      
+      accept = includes_accept_state? heads
+
+      puts "heads: #{heads}"
+      puts "stack: #{stack}"
+      puts "accept: #{accept}"
 
       resp = {
         input: input,
         accept: accept,
-        head: head,
-        stack: @stack
+        heads: heads,
+        stack: stack
       }
     end
 
@@ -61,8 +86,59 @@ module Automata
     # @param [String] state state label for beginning state.
     # @param [String] symbol input symbol.
     # @return [Array] Array of destination transition states.
-    def transition(state, symbol)
-      # TODO
+    def transition(state, symbol, stackTop=nil)
+      dests = []
+      if has_transition?(state, symbol)
+        actions = @transitions[state][symbol]
+        stackTop ||= @stack.last
+        able = true
+        @stack.push actions['push'] if actions['push']
+        if actions['pop']
+          able = false unless stackTop == actions['pop']
+          @stack.pop if able
+        end
+        if able
+          dests << actions['to']
+          dests + transition(actions['to'], '&')
+        else
+          return dests
+        end
+      else
+        return []
+      end
+    end
+
+    def pop?(symbol)
+      @stack.last == symbol
+    end
+
+    # Determines whether or not any transition states exist
+    # given a beginning state and input symbol pair.
+    #
+    # @param (see #transition)
+    # @return [Boolean] Whether or not a transition exists.
+    def has_transition?(state, symbol)
+      return false unless @transitions.has_key? state
+      if @transitions[state].has_key? symbol
+        actions = @transitions[state][symbol]
+        return false if actions['pop'] && @stack.last != actions['pop']
+        return true
+      else
+        return false
+      end
+    end
+
+    # Determines if a given state is an accept state.
+    #
+    # @param [String] state the state label to check.
+    # @return [Boolean] whether or not the state is an accept state.
+    def accept_state?(state)
+      @accept.include? state
+    end
+
+    def includes_accept_state?(states)
+      states.each { |s| return true if accept_state? s }
+      return false
     end
   end
 end

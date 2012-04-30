@@ -3,24 +3,36 @@
 # Accepts balanced brackets only.
 #
 # '@' to represent delta
+# 'ACCEPT' to represent unique, single start state
 states:
+  - S
   - A
   - B
+  - ha
 alphabet:
   - '('
   - ')'
-  - '@'
-start: A
-accept:
-  - B
+start: S
+accept: ha
 transitions:
+  S:
+    '&':
+      to: 'A'
+      push: '@'
   A:
     '(':
-      - A 
-      - 'push ('
+      to: 'A'
+      push: 'x'
     ')':
-      - A
-      - 'pop )' 
-    '@':
-      - B 
-      - 'pop @'
+      to: 'B'
+      pop: 'x'
+  B:
+    '(':
+      to: 'A'
+      push: 'x'
+    ')':
+      to: 'B'
+      pop: 'x'
+    '&':
+      to: 'ha'
+      pop: '@'

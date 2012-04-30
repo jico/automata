@@ -27,7 +27,7 @@ describe Automata::PDA do
     end
     
     it "should accept '(())'" do
-      @pda.accepts?('10').should == true
+      @pda.accepts?('(())').should == true
     end
     
     it "should accept '(()())'" do
@@ -35,7 +35,7 @@ describe Automata::PDA do
     end
     
     it "should not accept '(()'" do
-      @pda.accepts?('110').should == false
+      @pda.accepts?('(()').should == false
     end
   end
   
