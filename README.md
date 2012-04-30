@@ -2,6 +2,8 @@
 
 A sweet Ruby gem for creating and simulating deterministic/nondeterministic finite automata, push-down automata, and Turing machines.
 
+We also provide a neat [web interface](http://automata.byji.co) you might enjoy.
+
 __Note:__ This gem is still under development. Not all automata have been fully implemented yet.
 
 ## Installation
@@ -89,7 +91,10 @@ Awesomesauce. Please refer to the [wiki](https://github.com/jico/automata/wiki "
 
 ## Special Characters
 
-* _&_ - Represents an ε-transition (epsilon transition). Note that you must wrap the symbol in quotes.
+* _&_ - Represents an ε-transition (epsilon transition). 
+* _@_ - Represents Δ (delta), or empty cell in stack/tape.
+
+__Note:__ All special characters must be enclosed in quotations.
 
 ## Contributing
 
