@@ -3,7 +3,8 @@
 # Accepts balanced parentheses only.
 #
 # '@' to represent delta
-# 'ACCEPT' to represent unique, single start state
+# '&' to represent ε-transitions
+#
 states:
   - S
   - A
