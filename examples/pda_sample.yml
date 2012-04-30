@@ -1,6 +1,6 @@
 ## # Sample PDA file.
 #
-# Accepts balanced brackets only.
+# Accepts balanced parentheses only.
 #
 # '@' to represent delta
 states:
