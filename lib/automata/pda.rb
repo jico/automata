@@ -50,6 +50,14 @@ module Automata
         
         heads = newHeads
         break if heads.empty? || includes_accept_state?(heads)
+        if has_transition?(head, symbol)
+          head = transition(head, symbol)
+        end
+      end
+    
+      accept = false
+      if accept_state? head
+        accept = true
       end
 
       puts "Loop finished"
@@ -78,34 +86,6 @@ module Automata
     def accepts?(input)
       resp = feed(input)
       resp[:accept]
-    end
-
-    # Determines the transition states, if any, from a given 
-    # beginning state and input symbol pair.
-    #
-    # @param [String] state state label for beginning state.
-    # @param [String] symbol input symbol.
-    # @return [Array] Array of destination transition states.
-    def transition(state, symbol, stackTop=nil)
-      dests = []
-      if has_transition?(state, symbol)
-        actions = @transitions[state][symbol]
-        stackTop ||= @stack.last
-        able = true
-        @stack.push actions['push'] if actions['push']
-        if actions['pop']
-          able = false unless stackTop == actions['pop']
-          @stack.pop if able
-        end
-        if able
-          dests << actions['to']
-          dests + transition(actions['to'], '&')
-        else
-          return dests
-        end
-      else
-        return []
-      end
     end
 
     def pop?(symbol)
