@@ -24,9 +24,16 @@ module Automata
     end
 
     def has_transition?(state, symbol)
-      #TODO
+      # TODO: test this
+      return false unless @transitions[0].include? state
     end
 
+    # Determines the transition states, if any, from a given 
+    # beginning state and input symbol pair.
+    #
+    # @param [String] state state label for beginning state.
+    # @param [String] symbol input symbol.
+    # @return [Array] Array of destination transition states.
     def transition(state, symbol)
       # TODO
     end
