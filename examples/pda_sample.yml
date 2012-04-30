@@ -21,6 +21,6 @@ transitions:
     ')':
       - A
       - 'pop )' 
-	'@':
-    - B 
-    - 'pop @'
+    '@':
+      - B 
+      - 'pop @'
