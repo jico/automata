@@ -4,8 +4,6 @@ A sweet Ruby gem for creating and simulating deterministic/nondeterministic fini
 
 We also provide a neat [web interface](http://automata.byji.co) you might enjoy.
 
-__Note:__ This gem is still under development. Not all automata have been fully implemented yet.
-
 ## Installation
 
 Requires __Ruby 1.9.3__.
