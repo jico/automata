@@ -26,9 +26,9 @@ module Automata
       # Iterate through each symbol of input string
       input.each_char do |symbol|
         if has_transition?(head, symbol)
-          transition(head, symbol)
+          head = transition(head, symbol)
         end
-	  end
+      end
     
       accept = false
       if accept_state? head
@@ -55,14 +55,14 @@ module Automata
       resp[:accept]
     end
 
-    # Determines the transition states, if any, from a given 
+    # Determines the transition state, if any, from a given 
     # beginning state and input symbol pair.
     #
     # @param [String] state state label for beginning state.
     # @param [String] symbol input symbol.
-    # @return [Array] Array of destination transition states.
+    # @return [String] state destination state.
     def transition(state, symbol)
-      # TODO
+      dest, action = @transitions[state][symbol]
     end
   end
 end
