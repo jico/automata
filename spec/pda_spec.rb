@@ -9,6 +9,14 @@ describe Automata::PDA do
     before do
       @pda = Automata::PDA.new(file: 'examples/pda_sample.yml')
     end
+
+    it "should have transition S, &" do
+      @pda.has_transition?('S','&').should == true
+    end
+
+    it "should have transition A, (" do
+      @pda.has_transition?('S','&').should == true
+    end
     
     it "should accept '()'" do
       @pda.accepts?('()').should == true
@@ -26,8 +34,8 @@ describe Automata::PDA do
       @pda.accepts?('((').should == false
     end
     
-    it "should accept '(())'" do
-      @pda.accepts?('(())').should == true
+    it "should not accept '())'" do
+      @pda.accepts?('())').should == false
     end
     
     it "should accept '(()())'" do

@@ -6,7 +6,7 @@ module Automata
     # Initialize a PDA object.
     def initialize(params={})
       super(params)
-      @alphabet << '&' unless @alphabet.include? '&'
+      @alphabet << '&' unless !@alphabet || @alphabet.include?('&')
       @stack = []
     end
 
@@ -26,7 +26,7 @@ module Automata
       heads += eTrans
 
       puts "initial heads: #{heads}"
-      puts "initial stack: #{stack}"
+      puts "initial stack: #{@stack}"
 
       # Iterate through each symbol of input string
       input.each_char do |symbol|
@@ -41,15 +41,16 @@ module Automata
           # Head dies if no transition for symbol
           if has_transition?(head, symbol)
             puts "Head #{head} transitions #{symbol}"
-            puts "stack: #{stack}"
+            puts "stack: #{@stack}"
             transition(head, symbol).each { |t| newHeads << t }
             puts "heads: #{newHeads}"
+            puts "stack: #{@stack}"
           end
 
         end
         
         heads = newHeads
-        break if heads.empty? || includes_accept_state?(heads)
+        break if heads.empty?
       end
 
       puts "Loop finished"
@@ -88,6 +89,7 @@ module Automata
     # @return [Array] Array of destination transition states.
     def transition(state, symbol, stackTop=nil)
       dests = []
+
       if has_transition?(state, symbol)
         actions = @transitions[state][symbol]
         stackTop ||= @stack.last
@@ -99,7 +101,20 @@ module Automata
         end
         if able
           dests << actions['to']
-          dests + transition(actions['to'], '&')
+
+          if has_transition?(actions['to'], '&')
+            actions = @transitions[actions['to']]['&']
+            able = true
+            @stack.push actions['push'] if actions['push']
+            if actions['pop']
+              able = false unless @stack.last == actions['pop']
+              @stack.pop if able
+            end
+            if able
+              dests << actions['to']
+            end
+          end
+          dests
         else
           return dests
         end
