@@ -7,9 +7,11 @@ module Automata
     #
     # @return [Boolean] whether or not the DFA is valid.
     def valid?
-      # @todo Check that each state is connected.
+      # @todo #DONE# Check that each state is connected.
       #   Iterate through each states to verify the graph
       #   is not disjoint.
+      return false unless all_connected?
+      
       @transitions.each do |key, val|
         @alphabet.each do |a| 
           return false unless @transitions[key].has_key? a.to_s
