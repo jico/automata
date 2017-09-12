@@ -7,6 +7,14 @@ module Automata
     #   Check that each transition reads a valid, declared
     #   input symbol.
     
+    # @return [Boolean] whether or not each transition has valid input symbols
+    def check_input_integrity
+      transition_chars = []
+      @transitions.fetch_values.each {|t| transition_chars << t.fetch_keys}
+      transition_chars = transition_chars.flatten.map!{|c| c.to_s}
+      return  - @alphabet == []
+    end
+    
     # Initialize and build a StateDiagram object.
     #
     # @param [Hash] params the parameters to build the machine with.
@@ -29,6 +37,8 @@ module Automata
       @accept = yaml['accept'] || params[:accept]
       @transitions = yaml['transitions'] || params[:transitions]
       @transitions = Hash.keys_to_strings(@transitions)
+      
+      return unless check_input_integrity
     end
     
     #Depth first search, check if every state can be reached by a combination of states > trans ..
