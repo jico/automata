@@ -30,5 +30,34 @@ module Automata
       @transitions = yaml['transitions'] || params[:transitions]
       @transitions = Hash.keys_to_strings(@transitions)
     end
+    
+    #Depth first search, check if every state can be reached by a combination of states > trans ..
+    # @return [Boolean] whether or not each state is connected
+    def all_connected?
+      return dfs_search(@states, @start)
+    end
+
+    # @param [Array<String>] the state labels of the machine.
+    # @param [String] start state label for beginning state.
+    def dfs_search(states, start)
+      color = Hash.new(:WHITE)
+      que =[]
+      color[@transitions[start]] = :GREY #color contains Hashes [Trans => State]
+      que.push(start)
+      while !que.empty? do
+        cur_state = que.pop
+
+        @transitions[cur_state].each do |next_state|
+          if color[state] == :WHITE #not yet visited
+            color[state] = :GREY
+            que.push next_state
+          end
+        end
+
+        color[cur_state] = :BLACK
+      end
+
+      return color.fetch_values.detect{|c| c != :BLACK} == nil
+    end
   end
 end
