@@ -2,8 +2,6 @@
 
 A sweet Ruby gem for creating and simulating deterministic/nondeterministic finite automata, push-down automata, and Turing machines.
 
-We also provide a neat [web interface](http://automata.byji.co) you might enjoy.
-
 ## Installation
 
 Requires __Ruby 1.9.3__.
