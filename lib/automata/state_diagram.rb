@@ -12,7 +12,7 @@ module Automata
       transition_chars = []
       @transitions.fetch_values.each {|t| transition_chars << t.fetch_keys}
       transition_chars = transition_chars.flatten.map!{|c| c.to_s}
-      return  - @alphabet == []
+      return transition_chars - @alphabet == []
     end
     
     # Initialize and build a StateDiagram object.
