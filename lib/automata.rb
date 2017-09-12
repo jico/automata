@@ -17,7 +17,7 @@ class Hash
   # @return [Hash] the new Hash with strings as keys.
   def self.keys_to_strings(obj)
     return obj unless obj.kind_of? Hash
-    obj = obj.inject({}){|h,(k,v)| h[k.to_s] = Hash.keys_to_strings(v); h}
+    obj = obj.transform_keys {|key| key.to_s }
     return obj
   end
 end
